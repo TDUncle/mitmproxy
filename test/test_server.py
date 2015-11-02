@@ -539,7 +539,7 @@ class TestProxy(tservers.HTTPProxTest):
         assert response.status_code == 304  # sanity test for our low level request
         # time.sleep might be a little bit shorter than a second,
         # we observed up to 0.93s on appveyor.
-        assert a and b and 0.8 < (request.timestamp_end - request.timestamp_start) < 5
+        assert 0.8 < (request.timestamp_end - request.timestamp_start) < 5 and b and a
 
     def trigger_race_condition_1(self):
         self.test_request_timestamps()
