@@ -516,7 +516,9 @@ class TestProxy(tservers.HTTPProxTest):
         assert f.status_code == 304
 
         response = self.master.state.view[0].response
-        assert 0.9 <= response.timestamp_end - response.timestamp_start <= 1.2
+        # time.sleep might be a little bit shorter than a second,
+        # we observed up to 0.93s on appveyor.
+        assert 0.8 <= response.timestamp_end - response.timestamp_start
 
     def test_request_timestamps(self):
         # test that we notice a delay between timestamps in request object
@@ -562,7 +564,6 @@ class TestProxy(tservers.HTTPProxTest):
 
     def trigger_race_condition_6(self):
         self.test_request_timestamps()
-
 
     def trigger_race_condition_7(self):
         self.test_request_timestamps()
